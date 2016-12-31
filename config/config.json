@@ -30,6 +30,20 @@
       "module": {
         "arguments": [{"directory": "path:./controllers"}]
       }
+    },
+    "appsec": {
+      "priority": 1500,
+      "module": {
+        "name": "lusca",
+        "arguments": [
+          {
+            "csrf": false,
+            "xframe": "SAMEORIGIN",
+            "p3p": false,
+            "csp": false
+          }
+        ]
+      }
     }
   }
 }

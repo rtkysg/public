@@ -22,12 +22,17 @@ var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 
 var Layout = require('../public/views/layout.jsx');
-var Account = require('../public/views/account.jsx');
+var Home = require('../public/views/home.jsx');
+var Profile = require('../public/views/profile.jsx');
+var Login = require('../public/views/login.jsx');
 
 var routes = module.exports = (
     <Router>
         <Route path='/' component={Layout}>
-            <IndexRoute component={Account} />
+            <IndexRoute component={Home} />
+            <Route path='login' component={Login}></Route>
+            <Route path='profile' component={Profile}></Route>
         </Route>
+
     </Router>
 );

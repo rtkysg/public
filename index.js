@@ -21,6 +21,37 @@ var nodeJSX = require('node-jsx');
 
 var options, app;
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+var database = require('./database');
+
+passport.use(new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password'
+  },
+  function(username, password, callback) {
+    database.users.findUser(username, function (err, user) {
+      if (err) { return callback(err); }
+      if (!user) { return callback(null, false); }
+      if (user.password != password) { return callback(null, false); }
+      return callback(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
+
 /*
  * Create and configure application. Also exports application instance for use by tests.
  * See https://github.com/krakenjs/kraken-js#options for additional configuration options.
@@ -44,6 +75,8 @@ nodeJSX.install({
 
 app = module.exports = express();
 app.use(kraken(options));
+app.use(passport.initialize());
+app.use(passport.session());
 app.on('start', function () {
     console.log('Application ready to serve requests.');
     console.log('Environment: %s', app.kraken.get('env:env'));

@@ -19,15 +19,14 @@ var React = require('react');
 
 module.exports = React.createClass({
 
-  displayName: 'account',
+  displayName: 'profile',
 
   render: function render() {
 
     return (
-      <div id='account'>
+      <div id='profile'>
         <h1>{this.props.name}</h1>
-        <h6>I am a React Router rendered view</h6>
-        <a href='/server'>Click to go to a non-react-router rendered view</a>
+        <h6>Hello, {user.displayName}</h6>
       </div>
     );
   }

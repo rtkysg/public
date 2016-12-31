@@ -16,18 +16,22 @@
 'use strict';
 
 var IndexModel = require('../models/index');
-
+var passport = require('passport');
 
 module.exports = function (router) {
 
     var model = new IndexModel();
 
-    router.get('/', function (req, res) {
+    router.post('/login',
+        passport.authenticate('local', { successRedirect: '/profile',
+                                         failureRedirect: '/login' })
+    );
+    router.post('/profile',
+        passport.authenticate('local', { successRedirect: '/profile',
+                                         failureRedirect: '/login' })
+    );
+
+    router.get('*', function (req, res) {
         res.render(req.url, model);
     });
-
-    router.get('/server', function(req, res) {
-        res.render('server', model);
-    });
-
 };
